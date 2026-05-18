@@ -27,14 +27,7 @@ Security scanning using Trivy
 GitHub webhook integration
 Maven-based Java application build
 Real-time deployment after every code push
-📂 Project Structure
-project-root/
-│
-├── src/
-├── pom.xml
-├── Jenkinsfile
-├── README.md
-└── target/
+
 🔧 Prerequisites
 
 Before setting up the project, ensure the following are installed:
