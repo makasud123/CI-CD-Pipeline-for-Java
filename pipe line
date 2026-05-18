@@ -1,0 +1,86 @@
+pipeline {
+    agent any
+    environment{
+        SONAR_HOME= tool "sonar"
+    }
+
+    tools {
+        nodejs 'mynodejs'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Checkout Stage'
+
+                git branch: 'main',
+                url: 'https://github.com/mantu6611/pipe.git'
+            }
+        }
+        
+        stage("SonarQube Quality Analysis") {
+
+            steps {
+
+                withSonarQubeEnv("sonar") {
+                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=wonderlust -Dsonar.projectKey=wonderlust"
+                }
+            }
+        }    
+        stage('Build and Test') {
+            steps {
+                echo 'Build and Test Stage'
+
+                sh 'npm install'
+
+                sh './node_modules/mocha/bin/_mocha --exit ./test/test.js'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deployment Stage'
+
+                sshagent(['my-ssh']) {
+
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@23.20.219.196 << EOF
+
+                    sudo apt update
+                    sudo apt install -y nodejs npm git
+
+                    sudo npm install -g pm2
+
+                    rm -rf pipe
+
+                    git clone https://github.com/mantu6611/pipe.git
+
+                    cd pipe
+
+                    npm install
+
+                    pm2 delete nodeapp || true
+
+                    pm2 start index.js --name nodeapp
+
+                    pm2 save
+
+EOF
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+
+        success {
+            echo 'Pipeline Executed Successfully'
+        }
+
+        failure {
+            echo 'Pipeline Failed'
+        }
+    }
+}
