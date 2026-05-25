@@ -1,34 +1,42 @@
-Automated CI/CD Pipeline for Java Application Deployment on AWS EC2
-📌 Project Overview
+**Automated CI/CD Pipeline for Java Application Deployment on AWS EC2**:
+
+
+📌 **Project Overview**
 
 This project demonstrates a complete CI/CD (Continuous Integration and Continuous Deployment) pipeline for deploying a Java application on an AWS EC2 instance using modern DevOps tools and practices.
 
 The pipeline automates:
 
-Code integration from GitHub
-Build and testing using Jenkins
-Code quality analysis with SonarQube
-Security vulnerability scanning with Trivy
+Code integration from GitHub.
+
+Build and testing using Jenkins.
+
+Code quality analysis with SonarQube.
+
+Security vulnerability scanning with Trivy.
+
 Automated deployment to AWS EC2
 
-T
 
 
-🏗️ Architecture
+
+**🏗️*Architecture**
 
 
 Developer → GitHub → Jenkins Pipeline → SonarQube Analysis → Trivy Scan → Build & Test → Deploy to AWS EC2
-⚙️ Features
-Automated build and deployment pipeline
-Continuous Integration with Jenkins
-Continuous Deployment to AWS EC2
-Static code analysis using SonarQube
-Security scanning using Trivy
-GitHub webhook integration
-Maven-based Java application build
-Real-time deployment after every code push
 
-🔧 Prerequisites
+**⚙️ Features**
+
+ Automated build and deployment pipeline
+ Continuous Integration with Jenkins
+ Continuous Deployment to AWS EC2
+ Static code analysis using SonarQube
+ Security scanning using Trivy
+ GitHub webhook integration
+ Maven-based Java application build
+ Real-time deployment after every code push
+
+🔧 **Prerequisites**
 
 Before setting up the project, ensure the following are installed:
 
@@ -40,23 +48,28 @@ SonarQube
 Trivy
 AWS EC2 Instance
 Git
+
 ☁️ AWS EC2 Setup
+
 1. Launch EC2 Instance
 Select Ubuntu/Linux AMI
 Configure Security Groups:
 22 → SSH
 8080 → Jenkins/Application
 9000 → SonarQube
-2. Install Required Packages
+
+   
+3. Install Required Packages
 sudo apt update
 sudo apt install openjdk-17-jdk maven git -y
+
 🛠️ Jenkins Setup
 Install Jenkins
 sudo apt install jenkins -y
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
 
-Access Jenkins:
+**Access Jenkins:**
 
 http://<EC2-PUBLIC-IP>:8080
 🔍 SonarQube Setup
@@ -66,7 +79,7 @@ Run SonarQube using Docker:
 docker run -d --name sonarqube \
 -p 9000:9000 sonarqube:lts-community
 
-Access SonarQube:
+**Access SonarQube:**
 
 http://<EC2-PUBLIC-IP>:9000
 🛡️ Trivy Installation
@@ -91,7 +104,9 @@ http://<JENKINS-IP>:8080/github-webhook/
 Select:
 Content type: application/json
 Trigger: Just the push event
-📜 Jenkins Pipeline (Jenkinsfile)
+
+
+**📜 Jenkins Pipeline (Jenkinsfile)**:
 
     pipeline {
     agent any
@@ -181,20 +196,27 @@ EOF
 } 
 
 
-▶️ Pipeline Workflow
-Developer pushes code to GitHub
-GitHub webhook triggers Jenkins job
-Jenkins pulls latest code
-SonarQube checks code quality
-Trivy scans for vulnerabilities
-Jenkins deploys application to AWS EC2
-Application runs automatically on EC2
+**▶️Pipeline Workflow**:
 
-📊 Benefits of This Pipeline
+Developer pushes code to GitHub.
 
-Faster deployment cycles
-Improved code quality
-Automated security checks
-Reduced manual errors
-Continuous delivery and monitoring
-Scalable DevOps workflow
+GitHub webhook triggers Jenkins job.
+
+Jenkins pulls latest code.
+
+SonarQube checks code quality.
+
+Trivy scans for vulnerabilities.
+
+Jenkins deploys application to AWS EC2.
+
+Application runs automatically on EC2.
+
+**📊 Benefits of This Pipeline**:
+
+  Faster deployment cycles.
+  Improved code quality.
+  Automated security checks.
+  Reduced manual errors.
+  Continuous delivery and monitoring.
+  Scalable DevOps workflow
